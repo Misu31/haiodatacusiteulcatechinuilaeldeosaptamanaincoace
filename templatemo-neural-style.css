@@ -14,6 +14,32 @@ https://templatemo.com/tm-597-neural-glass
      padding: 0;
      box-sizing: border-box;
 }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(0,255,255,0.4));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-text {
+    letter-spacing: 0.5px;
+}
+.logo:hover .logo-img {
+    transform: scale(1.1) rotate(-3deg);
+    filter: drop-shadow(0 0 10px rgba(255,0,128,0.6));
+}
+
  body {
      font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
      background: #000;
@@ -36,6 +62,14 @@ https://templatemo.com/tm-597-neural-glass
      background: radial-gradient(circle at 15% 85%, rgba(75, 0, 130, 0.7) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(139, 37, 99, 0.8) 0%, transparent 50%), radial-gradient(circle at 45% 60%, rgba(128, 0, 128, 0.6) 0%, transparent 50%), radial-gradient(circle at 70% 40%, rgba(34, 139, 34, 0.4) 0%, transparent 50%), linear-gradient(135deg, #0a0a0a 0%, #2d1b3d 50%, #000000 100%);
      animation: backgroundPulse 14s ease-in-out infinite;
 }
+/* INCERCAM CEVA NOU GNG S-AR PUTEA ASA MEARGA FOARTE PROST */
+.neural-background,
+.geometric-shapes,
+.neural-lines {
+    will-change: transform;
+    pointer-events: none;
+}
+
  @keyframes backgroundPulse {
      0%, 100% {
          filter: brightness(0.9) saturate(1.4) hue-rotate(0deg);
@@ -1302,4 +1336,70 @@ https://templatemo.com/tm-597-neural-glass
  ::-webkit-scrollbar-thumb:hover {
      background: linear-gradient(45deg, #ff0080, #8000ff);
      box-shadow: 0 0 15px rgba(255, 0, 128, 0.7);
+}
+
+/*CE FAC EU IN LOC SA MA OCUP DE CE MI-A SPUS DIRECTOAREA*/
+.mouse-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(0, 255, 255, 0.18) 0%,
+        rgba(128, 0, 255, 0.12) 30%,
+        rgba(0, 0, 0, 0) 65%
+    );
+    filter: blur(40px);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+
+/*HAI SA INCERCAM SA MODIFICAM CONTRASTUL*/
+/* Text general și titluri */
+body, 
+.hero-description p, 
+.feature-content h3, 
+.feature-content p, 
+.timeline-content h4, 
+.timeline-content p, 
+.contact-info h3, 
+.contact-info p, 
+.footer-links a, 
+.section-title,
+.hero-subtitle,
+.hero h1,
+.hero-stat-number,
+.hero-stat-label,
+.cta-button,
+.cta-button.secondary,
+.hexagon h4,
+.hexagon p,
+.hexagon-icon,
+.timeline-year {
+    color: #ffffff; /* Alb pentru contrast maxim */
+    text-shadow: 0 0 2px rgba(224, 163, 255, 0.6); /* Umbră subtilă pentru vizibilitate */
+}
+
+/* Link-uri nav și active */
+.nav-links a,
+.nav-links a.active,
+.mobile-nav a,
+.mobile-nav a.active {
+    color: #ffffff;
+    text-shadow: 0 0 2px rgba(224, 163, 255, 0.8);
+}
+
+/* Butoane secundare și hover */
+.cta-button.secondary:hover,
+.nav-links a:hover,
+.mobile-nav a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 2px rgba(224, 163, 255, 0.9);
 }

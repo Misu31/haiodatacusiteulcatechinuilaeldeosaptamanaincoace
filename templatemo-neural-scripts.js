@@ -173,9 +173,7 @@ https://templatemo.com/tm-597-neural-glass
         });
 
         // Form submission effect
-        /*
-        VARIANTA VECHE FARA FUNCTIONALITATE DAR CARE ARATA MISTO
-        document.querySelector('.submit-btn').addEventListener('click', function(e) {
+        /*document.querySelector('.submit-btn').addEventListener('click', function(e) {
             e.preventDefault();
             this.innerHTML = 'Se trimite...';
             this.style.background = 'linear-gradient(45deg, #8000ff, #00ffff)';
@@ -190,43 +188,125 @@ https://templatemo.com/tm-597-neural-glass
                 }, 2000);
             }, 1500);
         });*/
-        /*// VARTIANTA NOUA CU O INCERCARE DE FUNCTIONALITATE... mustar
-        document.querySelector('.submit-btn').addEventListener('click', function() {
-        this.innerHTML = 'Se trimite...';
-        this.style.background = 'linear-gradient(45deg, #8000ff, #00ffff)';
+        // Combined sendEmail + button animation
+function sendEmail(event) {
+    event.preventDefault(); // stop form reload
 
-        setTimeout(() => {
-            this.innerHTML = 'Trimite';
-            this.style.background = 'linear-gradient(45deg, #00ffff, #ff0080)';
-        }, 2000);
-        });
-        /* JAVASCRIPT: sendEmail + button UI animation
-   Put this after your other JS (or inside your main JS file).
-   Replace sitdorart@gmail.com with your email. */
+    // BUTTON ANIMATION
+    const btn = document.querySelector('.submit-btn');
+    btn.innerHTML = 'Se trimite...';
+    btn.style.background = 'linear-gradient(45deg, #8000ff, #00ffff)';
 
-    function sendEmail(event) {
-        // Stop normal form submission (prevent page reload)
-        event.preventDefault();
+    setTimeout(() => {
+        btn.innerHTML = 'Trimis cu succes!';
+        btn.style.background = 'linear-gradient(45deg, #00ff00, #00ffff)';
+    }, 1500);
 
-        // Read inputs
-        var nume = document.getElementById('nume').value || '';
-        var email = document.getElementById('mail').value || '';
-        var subiect = document.getElementById('subiect').value || '';
-        var mesaj = document.getElementById('mesaj').value || '';
+    setTimeout(() => {
+        btn.innerHTML = 'Trimite';
+        btn.style.background = 'linear-gradient(45deg, #00ffff, #ff0080)';
+    }, 3500);
 
-        // Build email body
-        var emailBody = 'Nume: ' + nume + '\n';
-        emailBody += 'Email: ' + email + '\n';
-        emailBody += 'Subiect: ' + subiect + '\n\n';
-        emailBody += 'Mesaj:\n' + mesaj;
+    // EMAIL SENDING (mailto)
+    var nume = document.getElementById('nume').value;
+    var email = document.getElementById('mail').value;
+    var subiect = document.getElementById('subiect').value;
+    var mesaj = document.getElementById('mesaj').value;
 
-        // Build mailto link with proper encoding
-        var mailtoLink = 'mailto:sitdorart@gmail.com'
-                    + '?subject=' + encodeURIComponent(subiect || 'Mesaj de pe site')
-                    + '&body=' + encodeURIComponent(emailBody);
+    var emailBody =
+        'Nume: ' + nume + '\n' +
+        'Email: ' + email + '\n' +
+        'Subiect: ' + subiect + '\n\n' +
+        'Mesaj:\n' + mesaj;
 
-        // Open the user's mail client
-        // Using window.location.href is the most compatible approach
-        window.location.href = mailtoLink;
+    var mailtoLink =
+        'mailto:sitdorart@gmail.com'
+        + '?subject=' + encodeURIComponent(subiect)
+        + '&body=' + encodeURIComponent(emailBody);
+
+    // OPEN MAIL APP
+    window.location.href = mailtoLink;
+}
+
+// Attach handler to form
+document.getElementById('contact-form').addEventListener('submit', sendEmail);
+/* ================================
+   Mouse-based background parallax
+   ================================ */
+
+const bg = document.querySelector('.neural-background');
+const shapesLayer = document.querySelector('.geometric-shapes');
+const linesLayer = document.querySelector('.neural-lines');
+
+let mouseX = 0;
+let mouseY = 0;
+let currentX = 0;
+let currentY = 0;
+
+// only desktop / mouse devices
+const enableMouseParallax = window.matchMedia('(pointer: fine)').matches;
+
+if (enableMouseParallax && bg && shapesLayer && linesLayer) {
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5);
+        mouseY = (e.clientY / window.innerHeight - 0.5);
+    });
+
+    function animateMouseParallax() {
+        // smooth easing
+        currentX += (mouseX - currentX) * 0.06;
+        currentY += (mouseY - currentY) * 0.06;
+
+        // background – slow
+        bg.style.transform = `translate(${currentX * 18}px, ${currentY * 18}px)`;
+
+        // shapes – medium
+        shapesLayer.style.transform = `translate(${currentX * 35}px, ${currentY * 35}px)`;
+
+        // lines – faster
+        linesLayer.style.transform = `translate(${currentX * 55}px, ${currentY * 55}px)`;
+
+        requestAnimationFrame(animateMouseParallax);
     }
+
+    animateMouseParallax();
+}
+/* ================================
+   Mouse glow effect
+   ================================ */
+
+const glow = document.createElement('div');
+glow.className = 'mouse-glow';
+document.body.appendChild(glow);
+
+let glowX = 0;
+let glowY = 0;
+let targetGlowX = 0;
+let targetGlowY = 0;
+
+if (enableMouseParallax) {
+
+    document.addEventListener('mousemove', (e) => {
+        targetGlowX = e.clientX;
+        targetGlowY = e.clientY;
+        glow.style.opacity = '2';
+    });
+
+    document.addEventListener('mouseleave', () => {
+        glow.style.opacity = '0';
+    });
+
+    function animateGlow() {
+        glowX += (targetGlowX - glowX) * 0.2;
+        glowY += (targetGlowY - glowY) * 0.2;
+
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+
+        requestAnimationFrame(animateGlow);
+    }
+
+    animateGlow();
+}
 
